@@ -199,7 +199,7 @@
 
 <div class="header">
   <h1>BDT Charge 成功率趋势分析</h1>
-  <p>2026-04-14 ~ 2026-04-15 · 每日 Top Provider 成功率曲线</p>
+  <p>2026-04-13 ~ 2026-04-15 · 每日 Top Provider 成功率曲线</p>
 </div>
 
 <div class="controls">
@@ -231,7 +231,17 @@
 <div id="statsContainer" class="stats-grid"></div>
 
 <script>
-const rawData = `Date: 2026-04-14
+const rawData = `Date: 2026-04-13
+ Currency: BDT
+ s_bdt_zenithpay: 184/73.18
+ s_bdt_gtpay: 21/71.42
+ s_bdt_passpay: 6
+ s_bdt_tigerpay: 2/100.00
+ s_bdt_starpagopay: 1/100.00
+ s_bdt_axispay: 1
+ [charge] total num: 215
+
+Date: 2026-04-14
  Currency: BDT
  s_bdt_zenithpay: 185/76.75
  s_bdt_gtpay: 52/60.00
@@ -297,6 +307,7 @@ const colors = {
   's_bdt_starpagopay': '#f472b6',
   's_bdt_tigerpay': '#fbbf24',
   's_bdt_axispay': '#fb923c',
+  's_bdt_passpay': '#f87171',
 };
 
 function getColor(name) {

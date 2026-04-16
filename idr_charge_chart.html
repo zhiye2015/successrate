@@ -199,7 +199,7 @@
 
 <div class="header">
   <h1>IDR Charge 成功率趋势分析</h1>
-  <p>2026-04-14 ~ 2026-04-15 · 每日 Top Provider 成功率曲线</p>
+  <p>2026-04-13 ~ 2026-04-15 · 每日 Top Provider 成功率曲线</p>
 </div>
 
 <div class="controls">
@@ -231,13 +231,22 @@
 <div id="statsContainer" class="stats-grid"></div>
 
 <script>
-const rawData = `Date: 2026-04-14
+const rawData = `Date: 2026-04-13
+ Currency: IDR
+ s_idr_newbayarpay: 23892/70.37
+ s_idr_trasafepay: 265/41.13
+ s_idr_clickpay: 132/68.93
+ s_idr_paygridpay: 13/16.66
+ s_idr_bpay: 7
+ [charge] total num: 24309
+
+Date: 2026-04-14
  Currency: IDR
  s_idr_newbayarpay: 32464/70.90
  s_idr_trasafepay: 308/54.22
  s_idr_clickpay: 153/71.23
  s_idr_paygridpay: 12
- [charge] total num: 32936
+ [charge] total num: 32937
 
 Date: 2026-04-15
  Currency: IDR
@@ -291,6 +300,7 @@ const colors = {
   's_idr_trasafepay': '#34d399',
   's_idr_clickpay': '#a78bfa',
   's_idr_paygridpay': '#f472b6',
+  's_idr_bpay': '#fbbf24',
 };
 
 function getColor(name) {
