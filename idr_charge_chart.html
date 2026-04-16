@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IDR Charge 成功率趋势分析</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: #0a0e1a;
+    color: #e0e6ed;
+    min-height: 100vh;
+    padding: 24px;
+  }
+
+  .header {
+    text-align: center;
+    margin-bottom: 32px;
+  }
+  .header h1 {
+    font-size: 28px;
+    font-weight: 700;
+    background: linear-gradient(135deg, #60a5fa, #a78bfa, #f472b6);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 8px;
+  }
+  .header p {
+    color: #8892a4;
+    font-size: 14px;
+  }
+
+  .controls {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+  }
+  .controls button {
+    padding: 8px 18px;
+    border: 1px solid #2a3344;
+    border-radius: 8px;
+    background: #131929;
+    color: #8892a4;
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+  }
+  .controls button:hover {
+    border-color: #60a5fa;
+    color: #60a5fa;
+    background: rgba(96, 165, 250, 0.08);
+  }
+  .controls button.active {
+    border-color: #60a5fa;
+    color: #fff;
+    background: linear-gradient(135deg, rgba(96,165,250,0.2), rgba(167,139,250,0.15));
+    box-shadow: 0 0 16px rgba(96, 165, 250, 0.15);
+  }
+
+  .chart-container {
+    background: #111827;
+    border: 1px solid #1e293b;
+    border-radius: 16px;
+    padding: 24px;
+    margin-bottom: 24px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+    position: relative;
+    overflow: hidden;
+  }
+  .chart-container::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, #60a5fa, #a78bfa, #f472b6);
+  }
+  .chart-container h2 {
+    font-size: 16px;
+    font-weight: 600;
+    color: #cbd5e1;
+    margin-bottom: 16px;
+  }
+  .chart-wrapper {
+    position: relative;
+    height: 500px;
+  }
+
+  .legend-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 12px;
+    border-radius: 6px;
+    background: #1a2235;
+    cursor: pointer;
+    font-size: 12px;
+    transition: all 0.2s;
+    border: 1px solid transparent;
+    user-select: none;
+  }
+  .legend-item:hover { border-color: #334155; }
+  .legend-item.hidden { opacity: 0.35; }
+  .legend-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .legend-name {
+    color: #94a3b8;
+    font-weight: 500;
+  }
+
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 12px;
+    margin-top: 24px;
+  }
+  .stat-card {
+    background: #131929;
+    border: 1px solid #1e293b;
+    border-radius: 12px;
+    padding: 16px;
+    transition: all 0.3s;
+  }
+  .stat-card:hover {
+    border-color: #334155;
+    transform: translateY(-2px);
+  }
+  .stat-card .name {
+    font-size: 12px;
+    color: #64748b;
+    margin-bottom: 6px;
+  }
+  .stat-card .value {
+    font-size: 22px;
+    font-weight: 700;
+  }
+  .stat-card .sub {
+    font-size: 11px;
+    color: #64748b;
+    margin-top: 4px;
+  }
+  .trend-down { color: #f87171; }
+  .trend-up { color: #34d399; }
+  .trend-flat { color: #fbbf24; }
+
+  .chart-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+  }
+  .chart-header h2 { margin-bottom: 0; }
+  .toggle-radios {
+    display: none;
+    gap: 12px;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+  }
+  .toggle-radios.visible { display: flex; }
+  .toggle-radios label {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 13px;
+    color: #94a3b8;
+    cursor: pointer;
+    padding: 5px 12px;
+    border-radius: 6px;
+    transition: all 0.2s;
+  }
+  .toggle-radios label:hover { background: rgba(96,165,250,0.08); }
+  .toggle-radios input[type="radio"] {
+    accent-color: #60a5fa;
+    cursor: pointer;
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>IDR Charge 成功率趋势分析</h1>
+  <p>2026-04-14 ~ 2026-04-15 · 每日 Top Provider 成功率曲线</p>
+</div>
+
+<div class="controls">
+  <button class="active" onclick="showGroup('all')">全部</button>
+  <button onclick="showGroup('problem')">⚠️ 问题通道</button>
+</div>
+
+<div class="chart-container">
+  <div class="chart-header">
+    <h2>📈 每日成功率曲线</h2>
+    <div id="allToggleRadios" class="toggle-radios visible">
+      <label><input type="radio" name="allToggle" value="show" checked onchange="toggleAll('show')">全部展示</label>
+      <label><input type="radio" name="allToggle" value="hide" onchange="toggleAll('hide')">全部取消</label>
+    </div>
+  </div>
+  <div id="customLegend" class="legend-container"></div>
+  <div class="chart-wrapper">
+    <canvas id="mainChart"></canvas>
+  </div>
+</div>
+
+<div class="chart-container">
+  <h2>📊 每日充值笔数</h2>
+  <div class="chart-wrapper" style="height: 300px;">
+    <canvas id="volumeChart"></canvas>
+  </div>
+</div>
+
+<div id="statsContainer" class="stats-grid"></div>
+
+<script>
+const rawData = `Date: 2026-04-14
+ Currency: IDR
+ s_idr_newbayarpay: 32464/70.90
+ s_idr_trasafepay: 308/54.22
+ s_idr_clickpay: 153/71.23
+ s_idr_paygridpay: 12
+ [charge] total num: 32936
+
+Date: 2026-04-15
+ Currency: IDR
+ s_idr_newbayarpay: 35521/71.99
+ s_idr_trasafepay: 396/57.50
+ s_idr_clickpay: 168/74.40
+ [charge] total num: 36089`;
+
+// Parse data
+const parsed = {};
+const chargeTotals = {};
+let curDate = null;
+
+rawData.split('\n').forEach(line => {
+  line = line.trim();
+  if (!line) return;
+  const dm = line.match(/^Date:\s*([\d-]+)/);
+  if (dm) { curDate = dm[1]; parsed[curDate] = []; return; }
+  if (line.includes('Currency:')) return;
+  const cm = line.match(/\[charge\] total num:\s*(\d+)/);
+  if (cm) { chargeTotals[curDate] = parseInt(cm[1]); return; }
+  const pm = line.match(/^(\S+):\s*(\d+)(?:\/([\d.]+))?/);
+  if (pm && curDate) {
+    parsed[curDate].push({
+      name: pm[1],
+      num: parseInt(pm[2]),
+      rate: pm[3] ? parseFloat(pm[3]) : null
+    });
+  }
+});
+
+const dates = Object.keys(parsed).sort();
+const labels = dates.map(d => d.slice(5));
+
+const allProviders = {};
+dates.forEach(d => {
+  parsed[d].forEach(p => {
+    if (!allProviders[p.name]) allProviders[p.name] = {};
+    allProviders[p.name][d] = { num: p.num, rate: p.rate };
+  });
+});
+
+const providerAvgVol = {};
+Object.entries(allProviders).forEach(([name, dayData]) => {
+  const nums = Object.values(dayData).map(v => v.num);
+  providerAvgVol[name] = nums.reduce((a, b) => a + b, 0) / nums.length;
+});
+
+const colors = {
+  's_idr_newbayarpay': '#60a5fa',
+  's_idr_trasafepay': '#34d399',
+  's_idr_clickpay': '#a78bfa',
+  's_idr_paygridpay': '#f472b6',
+};
+
+function getColor(name) {
+  return colors[name] || `hsl(${(name.split('').reduce((h,c) => h + c.charCodeAt(0), 0) * 137) % 360}, 65%, 60%)`;
+}
+
+const groups = {
+  problem: ['s_idr_trasafepay'],
+  all: Object.keys(allProviders)
+};
+
+let mainChart, volumeChart;
+let currentGroup = 'all';
+let hiddenDatasets = new Set();
+
+function buildDatasets(group) {
+  const providerNames = groups[group] || groups.all;
+  return providerNames.map(name => {
+    const pData = allProviders[name] || {};
+    return {
+      label: name,
+      data: dates.map(d => pData[d]?.rate ?? null),
+      borderColor: getColor(name),
+      backgroundColor: getColor(name) + '18',
+      borderWidth: 2.5,
+      pointRadius: 5,
+      pointHoverRadius: 8,
+      pointBackgroundColor: getColor(name),
+      pointBorderColor: '#111827',
+      pointBorderWidth: 2,
+      tension: 0.3,
+      spanGaps: false,
+      hidden: hiddenDatasets.has(name),
+    };
+  });
+}
+
+function createMainChart(group) {
+  const ctx = document.getElementById('mainChart').getContext('2d');
+  if (mainChart) mainChart.destroy();
+
+  mainChart = new Chart(ctx, {
+    type: 'line',
+    data: { labels, datasets: buildDatasets(group) },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      interaction: { mode: 'index', intersect: false },
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          backgroundColor: '#1e293b',
+          titleColor: '#e2e8f0',
+          bodyColor: '#94a3b8',
+          borderColor: '#334155',
+          borderWidth: 1,
+          padding: 12,
+          cornerRadius: 8,
+          titleFont: { size: 13, weight: 600 },
+          bodyFont: { size: 12 },
+          callbacks: {
+            label: ctx => {
+              if (ctx.raw === null) return null;
+              const pData = allProviders[ctx.dataset.label]?.[dates[ctx.dataIndex]];
+              const vol = pData ? pData.num.toLocaleString() : '-';
+              return `${ctx.dataset.label}: ${ctx.raw}%  (${vol}笔)`;
+            }
+          }
+        }
+      },
+      scales: {
+        x: {
+          grid: { color: '#1e293b' },
+          ticks: { color: '#64748b', font: { size: 11 } }
+        },
+        y: {
+          grid: { color: '#1e293b' },
+          ticks: { color: '#64748b', font: { size: 11 }, callback: v => v + '%' },
+          min: 40,
+          max: 100
+        }
+      }
+    }
+  });
+
+  buildLegend(group);
+}
+
+function buildLegend(group) {
+  const container = document.getElementById('customLegend');
+  const providerNames = groups[group] || groups.all;
+  container.innerHTML = providerNames.map(name => {
+    const isHidden = hiddenDatasets.has(name);
+    return `<div class="legend-item ${isHidden ? 'hidden' : ''}" onclick="toggleProvider('${name}')">
+      <span class="legend-dot" style="background:${getColor(name)}"></span>
+      <span class="legend-name">${name}</span>
+    </div>`;
+  }).join('');
+}
+
+function toggleProvider(name) {
+  if (hiddenDatasets.has(name)) hiddenDatasets.delete(name);
+  else hiddenDatasets.add(name);
+  const idx = mainChart.data.datasets.findIndex(ds => ds.label === name);
+  if (idx >= 0) {
+    mainChart.data.datasets[idx].hidden = hiddenDatasets.has(name);
+    mainChart.update();
+  }
+  buildLegend(currentGroup);
+  if (currentGroup === 'all') updateStats(currentGroup);
+}
+
+function createVolumeChart() {
+  const ctx = document.getElementById('volumeChart').getContext('2d');
+  if (volumeChart) volumeChart.destroy();
+
+  const volumes = dates.map(d => chargeTotals[d] || 0);
+  const avgVol = volumes.reduce((a, b) => a + b, 0) / volumes.length;
+
+  volumeChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels,
+      datasets: [{
+        label: '充值笔数',
+        data: volumes,
+        backgroundColor: volumes.map(v => v > avgVol
+          ? 'rgba(96, 165, 250, 0.5)'
+          : 'rgba(96, 165, 250, 0.25)'),
+        borderColor: 'rgba(96, 165, 250, 0.8)',
+        borderWidth: 1,
+        borderRadius: 4,
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          backgroundColor: '#1e293b',
+          titleColor: '#e2e8f0',
+          bodyColor: '#94a3b8',
+          borderColor: '#334155',
+          borderWidth: 1,
+          padding: 12,
+          cornerRadius: 8,
+          callbacks: { label: ctx => `充值: ${ctx.raw.toLocaleString()} 笔` }
+        }
+      },
+      scales: {
+        x: { grid: { color: '#1e293b' }, ticks: { color: '#64748b', font: { size: 11 } } },
+        y: {
+          grid: { color: '#1e293b' },
+          ticks: { color: '#64748b', font: { size: 11 } }
+        }
+      }
+    }
+  });
+}
+
+function showGroup(group) {
+  currentGroup = group;
+  hiddenDatasets.clear();
+  const radios = document.getElementById('allToggleRadios');
+  if (group === 'all') {
+    radios.classList.add('visible');
+    const selected = document.querySelector('input[name="allToggle"]:checked').value;
+    if (selected === 'hide') groups.all.forEach(n => hiddenDatasets.add(n));
+  } else {
+    radios.classList.remove('visible');
+  }
+  document.querySelectorAll('.controls button').forEach(b => b.classList.remove('active'));
+  event.target.classList.add('active');
+  createMainChart(group);
+  updateStats(group);
+}
+
+function toggleAll(mode) {
+  if (currentGroup !== 'all') return;
+  hiddenDatasets.clear();
+  if (mode === 'hide') groups.all.forEach(n => hiddenDatasets.add(n));
+  createMainChart('all');
+  updateStats('all');
+}
+
+function updateStats(group) {
+  let providerNames = groups[group] || groups.all;
+  const container = document.getElementById('statsContainer');
+  if (group === 'all') {
+    providerNames = providerNames.filter(n => !hiddenDatasets.has(n));
+    if (!providerNames.length) {
+      container.innerHTML = '<div style="grid-column:1/-1;text-align:center;color:#64748b;font-size:13px;padding:16px;">👆 点击上方 Provider 图例激活曲线并查看统计卡片</div>';
+      return;
+    }
+  }
+  container.innerHTML = providerNames.map(name => {
+    const pData = allProviders[name] || {};
+    const ratesArr = Object.entries(pData)
+      .filter(([_, v]) => v.rate !== null)
+      .map(([d, v]) => ({ date: d, rate: v.rate, num: v.num }));
+    if (!ratesArr.length) return '';
+
+    const avg = (ratesArr.reduce((s, r) => s + r.rate, 0) / ratesArr.length).toFixed(2);
+    const min = ratesArr.reduce((m, r) => r.rate < m.rate ? r : m);
+    const max = ratesArr.reduce((m, r) => r.rate > m.rate ? r : m);
+    const diff = (max.rate - min.rate).toFixed(2);
+    const rateColor = avg >= 80 ? '#34d399' : avg >= 60 ? '#fbbf24' : '#f87171';
+
+    return `<div class="stat-card">
+      <div class="name" style="color:${getColor(name)}">${name}</div>
+      <div class="value" style="color:${rateColor}">${avg}%</div>
+      <div class="sub">波动: ${diff}% | 最低 ${min.rate}% (${min.date.slice(5)})</div>
+    </div>`;
+  }).join('');
+}
+
+createMainChart('all');
+createVolumeChart();
+updateStats('all');
+</script>
+</body>
+</html>
