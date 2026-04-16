@@ -199,7 +199,7 @@
 
 <div class="header">
   <h1>BDT Charge 成功率趋势分析</h1>
-  <p>2026-04-13 ~ 2026-04-15 · 每日 Top Provider 成功率曲线</p>
+  <p>2026-03-17 ~ 2026-04-15 · 每日 Top Provider 成功率曲线</p>
 </div>
 
 <div class="controls">
@@ -231,7 +231,264 @@
 <div id="statsContainer" class="stats-grid"></div>
 
 <script>
-const rawData = `Date: 2026-04-13
+const rawData = `Date: 2026-03-17
+ Currency: BDT
+ s_bdt_zenithpay: 174/72.41
+ s_bdt_tigerpay: 11
+ s_bdt_gtpay: 10/60.00
+ s_bdt_starpagopay: 3
+ s_bdt_passpay: 2/50.00
+ s_bdt_hrpay: 1
+ s_bdt_gopay: 1
+ [charge] total num: 202
+
+Date: 2026-03-18
+ Currency: BDT
+ s_bdt_zenithpay: 200/77.50
+ s_bdt_starpagopay: 7/14.28
+ s_bdt_gtpay: 7/50.00
+ s_bdt_gopay: 2/50.00
+ s_bdt_passpay: 1
+ s_bdt_tigerpay: 1
+ s_bdt_axispay: 1
+ [charge] total num: 219
+
+Date: 2026-03-19
+ Currency: BDT
+ s_bdt_zenithpay: 234/72.22
+ s_bdt_gtpay: 4
+ s_bdt_tigerpay: 2/50.00
+ s_bdt_starpagopay: 2/100.00
+ s_bdt_axispay: 1
+ [charge] total num: 243
+
+Date: 2026-03-20
+ Currency: BDT
+ s_bdt_zenithpay: 277/69.31
+ s_bdt_gtpay: 6
+ s_bdt_gopay: 3/100.00
+ s_bdt_tigerpay: 2
+ s_bdt_passpay: 2/100.00
+ [charge] total num: 290
+
+Date: 2026-03-21
+ Currency: BDT
+ s_bdt_zenithpay: 250/74.40
+ s_bdt_gtpay: 20
+ s_bdt_tigerpay: 3
+ s_bdt_gopay: 2/50.00
+ s_bdt_axispay: 2
+ s_bdt_starpagopay: 2
+ s_bdt_passpay: 1
+ s_bdt_hrpay: 1
+ [charge] total num: 281
+
+Date: 2026-03-22
+ Currency: BDT
+ s_bdt_zenithpay: 231/70.12
+ s_bdt_gtpay: 19/14.28
+ s_bdt_gopay: 5/100.00
+ s_bdt_tigerpay: 1
+ s_bdt_axispay: 1/100.00
+ s_bdt_starpagopay: 1/100.00
+ [charge] total num: 258
+
+Date: 2026-03-23
+ Currency: BDT
+ s_bdt_zenithpay: 273/71.42
+ s_bdt_gtpay: 4/100.00
+ s_bdt_gopay: 1/100.00
+ s_bdt_tigerpay: 1/100.00
+ [charge] total num: 279
+
+Date: 2026-03-24
+ Currency: BDT
+ s_bdt_zenithpay: 196/61.62
+ s_bdt_gopay: 10/90.00
+ s_bdt_gtpay: 7/100.00
+ s_bdt_passpay: 3/66.66
+ s_bdt_tigerpay: 2
+ [charge] total num: 218
+
+Date: 2026-03-25
+ Currency: BDT
+ s_bdt_zenithpay: 191/73.52
+ s_bdt_gopay: 8/75.00
+ s_bdt_gtpay: 7/100.00
+ s_bdt_passpay: 3/33.33
+ s_bdt_hrpay: 2
+ [charge] total num: 211
+
+Date: 2026-03-26
+ Currency: BDT
+ s_bdt_zenithpay: 159/64.93
+ s_bdt_gtpay: 10/83.33
+ s_bdt_passpay: 4/50.00
+ s_bdt_starpagopay: 1/100.00
+ [charge] total num: 174
+
+Date: 2026-03-27
+ Currency: BDT
+ s_bdt_zenithpay: 190/69.89
+ s_bdt_gtpay: 6/100.00
+ s_bdt_gopay: 2/100.00
+ s_bdt_passpay: 2/50.00
+ s_bdt_axispay: 1/100.00
+ [charge] total num: 201
+
+Date: 2026-03-28
+ Currency: BDT
+ s_bdt_zenithpay: 218/67.59
+ s_bdt_passpay: 18
+ s_bdt_gtpay: 14/100.00
+ s_bdt_tigerpay: 8/37.50
+ s_bdt_gopay: 6/100.00
+ s_bdt_axispay: 3/33.33
+ s_bdt_starpagopay: 2
+ [charge] total num: 269
+
+Date: 2026-03-29
+ Currency: BDT
+ s_bdt_zenithpay: 215/62.91
+ s_bdt_gtpay: 9/66.66
+ s_bdt_tigerpay: 2
+ s_bdt_gopay: 2/50.00
+ s_bdt_axispay: 1
+ s_bdt_passpay: 1
+ s_bdt_starpagopay: 1
+ s_bdt_hrpay: 1
+ [charge] total num: 232
+
+Date: 2026-03-30
+ Currency: BDT
+ s_bdt_zenithpay: 214/75.47
+ s_bdt_gtpay: 5/66.66
+ s_bdt_gopay: 1/100.00
+ [charge] total num: 220
+
+Date: 2026-03-31
+ Currency: BDT
+ s_bdt_zenithpay: 256/49.79
+ s_bdt_gtpay: 9/60.00
+ s_bdt_gopay: 6/100.00
+ s_bdt_tigerpay: 1
+ s_bdt_hrpay: 1
+ s_bdt_starpagopay: 1
+ [charge] total num: 274
+
+Date: 2026-04-01
+ Currency: BDT
+ s_bdt_zenithpay: 180/70.17
+ s_bdt_gtpay: 16/60.00
+ s_bdt_axispay: 15/40.00
+ s_bdt_gopay: 4/50.00
+ s_bdt_tigerpay: 2
+ s_bdt_passpay: 1/100.00
+ [charge] total num: 218
+
+Date: 2026-04-02
+ Currency: BDT
+ s_bdt_zenithpay: 210/66.66
+ s_bdt_gtpay: 33/69.69
+ s_bdt_gopay: 8/62.50
+ s_bdt_starpagopay: 1/100.00
+ s_bdt_hrpay: 1/100.00
+ s_bdt_axispay: 1/100.00
+ [charge] total num: 254
+
+Date: 2026-04-03
+ Currency: BDT
+ s_bdt_zenithpay: 191/76.43
+ s_bdt_gtpay: 46/62.50
+ s_bdt_gopay: 2/100.00
+ s_bdt_passpay: 2/50.00
+ s_bdt_axispay: 1/100.00
+ [charge] total num: 242
+
+Date: 2026-04-04
+ Currency: BDT
+ s_bdt_zenithpay: 199/75.87
+ s_bdt_gtpay: 25/88.00
+ s_bdt_axispay: 1/100.00
+ s_bdt_hrpay: 1/100.00
+ [charge] total num: 226
+
+Date: 2026-04-05
+ Currency: BDT
+ s_bdt_zenithpay: 140/78.10
+ s_bdt_gtpay: 30/89.65
+ s_bdt_tigerpay: 3/100.00
+ s_bdt_gopay: 2/100.00
+ [charge] total num: 175
+
+Date: 2026-04-06
+ Currency: BDT
+ s_bdt_zenithpay: 172/75.00
+ s_bdt_gtpay: 35/81.25
+ s_bdt_gopay: 3/66.66
+ s_bdt_tigerpay: 2/100.00
+ s_bdt_passpay: 1/100.00
+ [charge] total num: 213
+
+Date: 2026-04-07
+ Currency: BDT
+ s_bdt_zenithpay: 127/78.74
+ s_bdt_gtpay: 11/81.81
+ s_bdt_gopay: 2/100.00
+ s_bdt_axispay: 1
+ s_bdt_passpay: 1/100.00
+ [charge] total num: 142
+
+Date: 2026-04-08
+ Currency: BDT
+ s_bdt_zenithpay: 170/73.21
+ s_bdt_gtpay: 43/84.61
+ s_bdt_tigerpay: 5
+ s_bdt_gopay: 2/100.00
+ s_bdt_passpay: 1/100.00
+ [charge] total num: 221
+
+Date: 2026-04-09
+ Currency: BDT
+ s_bdt_zenithpay: 186/81.72
+ s_bdt_gtpay: 35/93.10
+ s_bdt_gopay: 5/80.00
+ s_bdt_tigerpay: 4/50.00
+ s_bdt_passpay: 3
+ s_bdt_hrpay: 1
+ s_bdt_starpagopay: 1/100.00
+ [charge] total num: 235
+
+Date: 2026-04-10
+ Currency: BDT
+ s_bdt_zenithpay: 183/76.50
+ s_bdt_gtpay: 59/92.30
+ s_bdt_tigerpay: 7/42.85
+ s_bdt_passpay: 4/50.00
+ s_bdt_gopay: 2/100.00
+ s_bdt_axispay: 1/100.00
+ [charge] total num: 256
+
+Date: 2026-04-11
+ Currency: BDT
+ s_bdt_zenithpay: 191/75.26
+ s_bdt_gtpay: 25/86.36
+ s_bdt_tigerpay: 3/66.66
+ s_bdt_starpagopay: 3/100.00
+ s_bdt_gopay: 1
+ s_bdt_passpay: 1/100.00
+ [charge] total num: 224
+
+Date: 2026-04-12
+ Currency: BDT
+ s_bdt_zenithpay: 192/80.10
+ s_bdt_gtpay: 12/100.00
+ s_bdt_gopay: 2/50.00
+ s_bdt_starpagopay: 1/100.00
+ s_bdt_tigerpay: 1
+ [charge] total num: 208
+
+Date: 2026-04-13
  Currency: BDT
  s_bdt_zenithpay: 184/73.18
  s_bdt_gtpay: 21/71.42

@@ -199,7 +199,7 @@
 
 <div class="header">
   <h1>PHP Charge 成功率趋势分析</h1>
-  <p>2026-04-13 ~ 2026-04-15 · 每日 Top Provider 成功率曲线</p>
+  <p>2026-03-17 ~ 2026-04-15 · 每日 Top Provider 成功率曲线</p>
 </div>
 
 <div class="controls">
@@ -231,7 +231,376 @@
 <div id="statsContainer" class="stats-grid"></div>
 
 <script>
-const rawData = `Date: 2026-04-13
+const rawData = `Date: 2026-03-17
+ Currency: PHP
+ s_php_982pay: 10157/83.78
+ s_php_fpay: 3479/79.11
+ s_php_filipay: 2689/79.65
+ s_php_shunfapay: 883/71.01
+ s_php_7tpay: 874/78.94
+ s_php_shijiepay: 720/85.55
+ s_php_v8pay: 438/76.43
+ s_php_bfpay: 186/84.40
+ s_php_kubaopay: 176/73.29
+ s_php_global3pay: 69/84.05
+ s_php_mmpay: 69/46.37
+ s_php_ltpay: 66/48.48
+ s_php_724pay: 27/44.44
+ [charge] total num: 19833
+
+Date: 2026-03-18
+ Currency: PHP
+ s_php_982pay: 9452/82.27
+ s_php_fpay: 5172/79.16
+ s_php_v8pay: 2514/78.44
+ s_php_shunfapay: 1081/65.70
+ s_php_shijiepay: 1073/81.91
+ s_php_7tpay: 511/71.62
+ s_php_filipay: 466/63.73
+ s_php_ltpay: 114/33.33
+ s_php_724pay: 62/62.90
+ s_php_mmpay: 42/16.66
+ s_php_scpay: 2
+ s_php_mypay2: 1
+ [charge] total num: 20490
+
+Date: 2026-03-19
+ Currency: PHP
+ s_php_982pay: 11105/82.58
+ s_php_fpay: 5219/81.99
+ s_php_shijiepay: 1468/39.64
+ s_php_v8pay: 1070/73.73
+ s_php_shunfapay: 1022/71.98
+ s_php_7tpay: 484/68.38
+ s_php_filipay: 197/38.07
+ s_php_bfpay: 179/69.27
+ s_php_ltpay: 114/55.26
+ s_php_mmpay: 16/18.75
+ s_php_724pay: 1/100.00
+ [charge] total num: 20875
+
+Date: 2026-03-20
+ Currency: PHP
+ s_php_982pay: 10450/81.44
+ s_php_fpay: 5311/82.76
+ s_php_shunfapay: 1132/71.02
+ s_php_shijiepay: 901/79.68
+ s_php_7tpay: 847/77.54
+ s_php_filipay: 644/72.82
+ s_php_v8pay: 450/75.55
+ s_php_ltpay: 148/48.97
+ s_php_mmpay: 4
+ s_php_724pay: 1/100.00
+ s_php_kubaopay: 1/100.00
+ [charge] total num: 19889
+
+Date: 2026-03-21
+ Currency: PHP
+ s_php_982pay: 9204/83.62
+ s_php_fpay: 5569/79.67
+ s_php_v8pay: 1765/80.71
+ s_php_shunfapay: 1104/71.82
+ s_php_shijiepay: 887/81.62
+ s_php_7tpay: 855/79.06
+ s_php_filipay: 395/72.91
+ s_php_kubaopay: 279/85.66
+ s_php_ltpay: 121/47.93
+ s_php_mmpay: 73/58.90
+ [charge] total num: 20252
+
+Date: 2026-03-22
+ Currency: PHP
+ s_php_982pay: 9766/82.02
+ s_php_fpay: 5110/77.54
+ s_php_v8pay: 1801/79.67
+ s_php_shunfapay: 1011/72.00
+ s_php_7tpay: 624/72.59
+ s_php_shijiepay: 533/78.61
+ s_php_filipay: 317/69.20
+ s_php_ltpay: 280/67.50
+ s_php_mmpay: 111/64.86
+ s_php_724pay: 94/56.38
+ s_php_kubaopay: 31/74.19
+ [charge] total num: 19678
+
+Date: 2026-03-23
+ Currency: PHP
+ s_php_982pay: 5796/84.36
+ s_php_fpay: 4054/80.87
+ s_php_ltpay: 2377/83.80
+ s_php_shijiepay: 1489/84.28
+ s_php_v8pay: 1416/82.44
+ s_php_shunfapay: 859/73.92
+ s_php_7tpay: 582/76.11
+ s_php_kubaopay: 502/84.23
+ s_php_filipay: 424/73.04
+ s_php_724pay: 82/85.36
+ s_php_mmpay: 78/67.94
+ [charge] total num: 17659
+
+Date: 2026-03-24
+ Currency: PHP
+ s_php_982pay: 7055/83.28
+ s_php_fpay: 7024/81.63
+ s_php_shijiepay: 922/85.03
+ s_php_shunfapay: 911/69.37
+ s_php_ltpay: 803/79.45
+ s_php_kubaopay: 436/76.20
+ s_php_v8pay: 301/65.44
+ s_php_7tpay: 279/77.41
+ s_php_filipay: 94/56.38
+ s_php_724pay: 11/45.45
+ s_php_mmpay: 2
+ [charge] total num: 17838
+
+Date: 2026-03-25
+ Currency: PHP
+ s_php_982pay: 7706/83.18
+ s_php_fpay: 7381/82.18
+ s_php_v8pay: 1045/57.79
+ s_php_shijiepay: 749/74.22
+ s_php_shunfapay: 629/55.83
+ s_php_7tpay: 355/74.36
+ s_php_kubaopay: 188/69.14
+ s_php_filipay: 118/60.16
+ s_php_ltpay: 33/66.66
+ s_php_mmpay: 4
+ [charge] total num: 18208
+
+Date: 2026-03-26
+ Currency: PHP
+ s_php_982pay: 9394/83.17
+ s_php_fpay: 4807/78.75
+ s_php_shijiepay: 1188/73.23
+ s_php_ltpay: 921/84.36
+ s_php_v8pay: 912/68.31
+ s_php_7tpay: 440/77.50
+ s_php_kubaopay: 216/56.94
+ s_php_filipay: 168/58.92
+ s_php_shunfapay: 97/68.04
+ s_php_mmpay: 4
+ [charge] total num: 18147
+
+Date: 2026-03-27
+ Currency: PHP
+ s_php_fpay: 6446/83.19
+ s_php_982pay: 6220/82.44
+ s_php_v8pay: 2172/78.68
+ s_php_shunfapay: 998/64.79
+ s_php_shijiepay: 718/74.79
+ s_php_7tpay: 575/75.65
+ s_php_filipay: 137/61.31
+ s_php_kubaopay: 133/75.93
+ s_php_ltpay: 109/42.20
+ s_php_mmpay: 3
+ [charge] total num: 17511
+
+Date: 2026-03-28
+ Currency: PHP
+ s_php_fpay: 7151/80.68
+ s_php_982pay: 7139/82.58
+ s_php_shunfapay: 986/65.41
+ s_php_v8pay: 876/75.34
+ s_php_shijiepay: 719/79.27
+ s_php_7tpay: 562/77.58
+ s_php_kubaopay: 207/58.93
+ s_php_filipay: 148/56.08
+ s_php_ltpay: 124/54.03
+ s_php_mmpay: 1
+ [charge] total num: 17913
+
+Date: 2026-03-29
+ Currency: PHP
+ s_php_982pay: 7329/83.42
+ s_php_fpay: 7308/81.71
+ s_php_shunfapay: 1068/70.78
+ s_php_shijiepay: 798/82.45
+ s_php_v8pay: 539/73.46
+ s_php_filipay: 164/48.78
+ s_php_ltpay: 159/49.05
+ s_php_7tpay: 59/76.27
+ s_php_kubaopay: 27/66.66
+ s_php_mmpay: 1
+ [charge] total num: 17452
+
+Date: 2026-03-30
+ Currency: PHP
+ s_php_982pay: 6731/82.21
+ s_php_fpay: 6129/79.58
+ s_php_v8pay: 1337/74.77
+ s_php_shunfapay: 1030/68.73
+ s_php_shijiepay: 909/80.30
+ s_php_ltpay: 198/48.48
+ s_php_filipay: 162/52.46
+ s_php_mmpay: 3
+ s_php_7tpay: 2
+ [charge] total num: 16501
+
+Date: 2026-03-31
+ Currency: PHP
+ s_php_982pay: 7273/81.21
+ s_php_fpay: 6663/79.01
+ s_php_shunfapay: 1067/60.73
+ s_php_shijiepay: 918/78.32
+ s_php_v8pay: 747/72.95
+ s_php_filipay: 133/53.38
+ s_php_ltpay: 132/50.75
+ s_php_mmpay: 4/25.00
+ s_php_7tpay: 2
+ s_php_tigerpay: 1
+ [charge] total num: 16940
+
+Date: 2026-04-01
+ Currency: PHP
+ s_php_fpay: 7788/78.90
+ s_php_982pay: 7718/82.01
+ s_php_shijiepay: 1202/76.87
+ s_php_shunfapay: 737/68.24
+ s_php_v8pay: 717/72.10
+ s_php_ltpay: 211/54.02
+ s_php_filipay: 138/48.55
+ s_php_mmpay: 6
+ [charge] total num: 18517
+
+Date: 2026-04-02
+ Currency: PHP
+ s_php_982pay: 8552/83.36
+ s_php_fpay: 7233/80.47
+ s_php_shijiepay: 1105/79.90
+ s_php_v8pay: 794/71.57
+ s_php_shunfapay: 787/70.39
+ s_php_ltpay: 151/58.94
+ s_php_filipay: 85/50.58
+ s_php_mmpay: 7/71.42
+ [charge] total num: 18714
+
+Date: 2026-04-03
+ Currency: PHP
+ s_php_982pay: 5685/83.34
+ s_php_fpay: 5292/80.51
+ s_php_7tpay: 4519/80.25
+ s_php_shunfapay: 669/73.39
+ s_php_shijiepay: 609/83.90
+ s_php_v8pay: 176/62.50
+ s_php_filipay: 92/67.39
+ s_php_mmpay: 85/70.58
+ s_php_ltpay: 73/72.60
+ [charge] total num: 17200
+
+Date: 2026-04-04
+ Currency: PHP
+ s_php_982pay: 5406/83.38
+ s_php_fpay: 4365/81.15
+ s_php_7tpay: 3308/79.65
+ s_php_shijiepay: 883/79.95
+ s_php_v8pay: 835/77.84
+ s_php_shunfapay: 607/70.01
+ s_php_ltpay: 488/85.24
+ s_php_filipay: 122/54.91
+ s_php_mmpay: 85/62.35
+ [charge] total num: 16099
+
+Date: 2026-04-05
+ Currency: PHP
+ s_php_982pay: 7004/83.48
+ s_php_7tpay: 4897/81.62
+ s_php_v8pay: 1800/80.55
+ s_php_ltpay: 712/83.28
+ s_php_shunfapay: 663/72.39
+ s_php_shijiepay: 419/72.31
+ s_php_mmpay: 102/54.45
+ s_php_filipay: 76/51.31
+ [charge] total num: 15673
+
+Date: 2026-04-06
+ Currency: PHP
+ s_php_982pay: 5217/82.36
+ s_php_7tpay: 4538/81.59
+ s_php_v8pay: 2167/81.54
+ s_php_shijiepay: 1436/79.80
+ s_php_ltpay: 795/81.00
+ s_php_shunfapay: 702/70.65
+ s_php_mmpay: 75/53.33
+ s_php_filipay: 69/42.02
+ [charge] total num: 14999
+
+Date: 2026-04-07
+ Currency: PHP
+ s_php_7tpay: 5202/80.69
+ s_php_982pay: 4987/84.05
+ s_php_v8pay: 2728/81.36
+ s_php_shijiepay: 1682/82.33
+ s_php_shunfapay: 763/68.15
+ s_php_ltpay: 136/59.55
+ s_php_mmpay: 84/54.76
+ s_php_filipay: 72/47.22
+ [charge] total num: 15654
+
+Date: 2026-04-08
+ Currency: PHP
+ s_php_7tpay: 7612/79.05
+ s_php_982pay: 4077/83.22
+ s_php_shijiepay: 3364/80.98
+ s_php_shunfapay: 718/68.52
+ s_php_v8pay: 206/58.25
+ s_php_ltpay: 133/57.89
+ s_php_mmpay: 102/50.98
+ s_php_filipay: 73/50.68
+ [charge] total num: 16285
+
+Date: 2026-04-09
+ Currency: PHP
+ s_php_7tpay: 8002/77.99
+ s_php_982pay: 4182/82.35
+ s_php_shijiepay: 2116/83.74
+ s_php_v8pay: 943/78.85
+ s_php_shunfapay: 670/72.83
+ s_php_ltpay: 95/50.52
+ s_php_mmpay: 68/51.47
+ s_php_filipay: 55/43.63
+ s_php_fpay: 10/50.00
+ [charge] total num: 16141
+
+Date: 2026-04-10
+ Currency: PHP
+ s_php_7tpay: 7691/77.70
+ s_php_982pay: 4509/83.72
+ s_php_shijiepay: 1449/84.33
+ s_php_v8pay: 1087/80.95
+ s_php_fpay: 645/82.45
+ s_php_shunfapay: 642/67.75
+ s_php_filipay: 92/55.43
+ s_php_mmpay: 62/69.35
+ s_php_ltpay: 59/66.10
+ [charge] total num: 16236
+
+Date: 2026-04-11
+ Currency: PHP
+ s_php_7tpay: 6783/78.87
+ s_php_982pay: 5484/83.77
+ s_php_shijiepay: 2042/81.68
+ s_php_v8pay: 919/79.43
+ s_php_shunfapay: 663/69.98
+ s_php_fpay: 610/78.19
+ s_php_mmpay: 91/52.74
+ s_php_ltpay: 80/68.75
+ s_php_filipay: 77/50.64
+ [charge] total num: 16749
+
+Date: 2026-04-12
+ Currency: PHP
+ s_php_7tpay: 6353/80.27
+ s_php_982pay: 4786/83.40
+ s_php_fpay: 3949/74.44
+ s_php_v8pay: 700/73.85
+ s_php_shunfapay: 623/69.02
+ s_php_shijiepay: 529/83.93
+ s_php_filipay: 99/48.48
+ s_php_mmpay: 77/51.31
+ s_php_ltpay: 61/70.49
+ [charge] total num: 17177
+
+Date: 2026-04-13
  Currency: PHP
  s_php_7tpay: 6053/77.49
  s_php_982pay: 5965/80.50

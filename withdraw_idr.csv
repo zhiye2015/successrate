@@ -1,4 +1,16 @@
 Date,Provider,Num,Rate
+2026-03-19,s_idr_jayapay,2,100.00
+2026-03-23,s_idr_inpay,6,100.00
+2026-03-30,s_idr_payingpay,9,100.00
+2026-03-30,s_idr_otgpay,1,100.00
+2026-03-31,s_idr_bpay,6,100.00
+2026-04-02,s_idr_newbayarpay,1,100.00
+2026-04-05,s_idr_newbayarpay,1,100.00
+2026-04-08,s_idr_newbayarpay,10,100.00
+2026-04-09,s_idr_newbayarpay,61,100.00
+2026-04-10,s_idr_newbayarpay,503,100.00
+2026-04-11,s_idr_newbayarpay,1425,99.92
+2026-04-12,s_idr_newbayarpay,2704,100.00
 2026-04-13,s_idr_newbayarpay,4069,100.02
 2026-04-13,s_idr_paygridpay,10,133.33
 2026-04-14,s_idr_newbayarpay,5907,99.94
