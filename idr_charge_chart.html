@@ -193,13 +193,87 @@
     accent-color: #60a5fa;
     cursor: pointer;
   }
+
+  .page-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: stretch;
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+  .page-nav.bottom { margin-bottom: 0; margin-top: 32px; }
+  .nav-btn {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px 28px;
+    border: 1px solid #1e293b;
+    border-radius: 14px;
+    background: #111827;
+    color: #cbd5e1;
+    text-decoration: none;
+    font-family: 'Inter', sans-serif;
+    transition: all 0.3s ease;
+    min-width: 220px;
+    position: relative;
+    overflow: hidden;
+  }
+  .nav-btn::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, #60a5fa, #a78bfa);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .nav-btn:hover {
+    border-color: #334155;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+  }
+  .nav-btn:hover::before { opacity: 1; }
+  .nav-btn.prev { justify-content: flex-start; }
+  .nav-btn.next { justify-content: flex-end; margin-left: auto; text-align: right; }
+  .nav-arrow {
+    font-size: 28px;
+    font-weight: 300;
+    color: #60a5fa;
+    flex-shrink: 0;
+    line-height: 1;
+  }
+  .nav-text { display: flex; flex-direction: column; gap: 2px; }
+  .nav-label {
+    font-size: 11px;
+    color: #64748b;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .nav-title {
+    font-size: 16px;
+    font-weight: 600;
+  }
+  .nav-btn.prev:hover .nav-arrow { transform: translateX(-4px); }
+  .nav-btn.next:hover .nav-arrow { transform: translateX(4px); }
+  .nav-btn .nav-arrow { transition: transform 0.3s; }
 </style>
 </head>
 <body>
 
+<div class="page-nav">
+  <a class="nav-btn prev" href="index.html">
+    <span class="nav-arrow">←</span>
+    <span class="nav-text"><span class="nav-label">返回</span><span class="nav-title">🏠 首页导航</span></span>
+  </a>
+  <a class="nav-btn next" href="bdt_charge_chart.html">
+    <span class="nav-text"><span class="nav-label">下一页</span><span class="nav-title">🇧🇩 BDT Charge</span></span>
+    <span class="nav-arrow">→</span>
+  </a>
+</div>
+
 <div class="header">
   <h1>IDR Charge 成功率趋势分析</h1>
-  <p>2026-03-17 ~ 2026-04-15 · 每日 Top Provider 成功率曲线</p>
+  <p>2026-03-19 ~ 2026-04-27 · 每日 Top Provider 成功率曲线</p>
 </div>
 
 <div class="controls">
@@ -231,18 +305,7 @@
 <div id="statsContainer" class="stats-grid"></div>
 
 <script>
-const rawData = `Date: 2026-03-17
- Currency: IDR
- s_idr_newbayarpay: 1
- [charge] total num: 1
-
-Date: 2026-03-18
- Currency: IDR
- s_idr_pikingpay: 3
- s_idr_newbayarpay: 1
- [charge] total num: 4
-
-Date: 2026-03-19
+const rawData = `Date: 2026-03-19
  Currency: IDR
  s_idr_jayapay: 2/200.00
  s_idr_akepay: 1/100.00
@@ -415,7 +478,99 @@ Date: 2026-04-15
  s_idr_newbayarpay: 35521/71.99
  s_idr_trasafepay: 396/57.50
  s_idr_clickpay: 168/74.40
- [charge] total num: 36089`;
+ [charge] total num: 36089
+Date: 2026-04-16
+ Currency: IDR
+ s_idr_newbayarpay: 36084/76.69
+ s_idr_jayapay: 2931/24.63
+ s_idr_trasafepay: 376/52.44
+ s_idr_clickpay: 145/74.64
+ [charge] total num: 39536
+Date: 2026-04-17
+ Currency: IDR
+ s_idr_newbayarpay: 40863/78.96
+ s_idr_jayapay: 6018/26.30
+ s_idr_trasafepay: 442/56.81
+ s_idr_clickpay: 238/78.57
+ s_idr_tigerpay: 7/50.00
+ s_idr_paygridpay: 1
+ [charge] total num: 47569
+
+Date: 2026-04-18
+ Currency: IDR
+ s_idr_newbayarpay: 51751/68.20
+ s_idr_jayapay: 8871/16.62
+ s_idr_trasafepay: 755/42.76
+ s_idr_clickpay: 441/53.07
+ [charge] total num: 61818
+
+Date: 2026-04-19
+ Currency: IDR
+ s_idr_newbayarpay: 51050/79.58
+ s_idr_jayapay: 8674/25.00
+ s_idr_trasafepay: 659/52.67
+ s_idr_clickpay: 329/70.42
+ [charge] total num: 60712
+Date: 2026-04-20
+ Currency: IDR
+ s_idr_newbayarpay: 48017/80.52
+ s_idr_jayapay: 7946/27.09
+ s_idr_trasafepay: 552/62.97
+ s_idr_clickpay: 318/76.41
+ [charge] total num: 56833
+
+Date: 2026-04-21
+ Currency: IDR
+ s_idr_newbayarpay: 50504/79.92
+ s_idr_jayapay: 7885/29.11
+ s_idr_trasafepay: 740/59.40
+ s_idr_clickpay: 421/64.16
+ [charge] total num: 59550
+Date: 2026-04-22
+ Currency: IDR
+ s_idr_newbayarpay: 49761/80.55
+ s_idr_jayapay: 7502/29.20
+ s_idr_trasafepay: 671/62.16
+ s_idr_clickpay: 388/58.28
+ [charge] total num: 58322
+
+Date: 2026-04-23
+ Currency: IDR
+ s_idr_newbayarpay: 52416/79.64
+ s_idr_jayapay: 8394/28.48
+ s_idr_trasafepay: 701/53.57
+ s_idr_clickpay: 383/71.27
+ [charge] total num: 61894
+Date: 2026-04-24
+ Currency: IDR
+ s_idr_newbayarpay: 56037/79.68
+ s_idr_jayapay: 9258/27.08
+ s_idr_trasafepay: 906/62.28
+ s_idr_clickpay: 366/75.41
+ [charge] total num: 66567
+
+Date: 2026-04-25
+ Currency: IDR
+ s_idr_newbayarpay: 61331/73.95
+ s_idr_jayapay: 11400/22.80
+ s_idr_trasafepay: 1230/51.30
+ s_idr_clickpay: 599/58.62
+ [charge] total num: 74560
+
+Date: 2026-04-26
+ Currency: IDR
+ s_idr_newbayarpay: 66498/74.17
+ s_idr_jayapay: 12449/20.26
+ s_idr_trasafepay: 1319/51.80
+ s_idr_clickpay: 852/44.96
+ [charge] total num: 81118
+Date: 2026-04-27
+ Currency: IDR
+ s_idr_newbayarpay: 61086/78.44
+ s_idr_jayapay: 9702/24.31
+ s_idr_trasafepay: 871/61.72
+ s_idr_clickpay: 460/73.20
+ [charge] total num: 72119`;
 
 // Parse data
 const parsed = {};
@@ -684,5 +839,17 @@ createMainChart('all');
 createVolumeChart();
 updateStats('all');
 </script>
+
+<div class="page-nav bottom">
+  <a class="nav-btn prev" href="index.html">
+    <span class="nav-arrow">←</span>
+    <span class="nav-text"><span class="nav-label">返回</span><span class="nav-title">🏠 首页导航</span></span>
+  </a>
+  <a class="nav-btn next" href="bdt_charge_chart.html">
+    <span class="nav-text"><span class="nav-label">下一页</span><span class="nav-title">🇧🇩 BDT Charge</span></span>
+    <span class="nav-arrow">→</span>
+  </a>
+</div>
+
 </body>
 </html>

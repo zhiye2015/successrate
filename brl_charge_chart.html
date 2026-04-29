@@ -196,13 +196,87 @@
     accent-color: #60a5fa;
     cursor: pointer;
   }
+
+  .page-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: stretch;
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+  .page-nav.bottom { margin-bottom: 0; margin-top: 32px; }
+  .nav-btn {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px 28px;
+    border: 1px solid #1e293b;
+    border-radius: 14px;
+    background: #111827;
+    color: #cbd5e1;
+    text-decoration: none;
+    font-family: 'Inter', sans-serif;
+    transition: all 0.3s ease;
+    min-width: 220px;
+    position: relative;
+    overflow: hidden;
+  }
+  .nav-btn::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, #60a5fa, #a78bfa);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .nav-btn:hover {
+    border-color: #334155;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+  }
+  .nav-btn:hover::before { opacity: 1; }
+  .nav-btn.prev { justify-content: flex-start; }
+  .nav-btn.next { justify-content: flex-end; margin-left: auto; text-align: right; }
+  .nav-arrow {
+    font-size: 28px;
+    font-weight: 300;
+    color: #60a5fa;
+    flex-shrink: 0;
+    line-height: 1;
+  }
+  .nav-text { display: flex; flex-direction: column; gap: 2px; }
+  .nav-label {
+    font-size: 11px;
+    color: #64748b;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .nav-title {
+    font-size: 16px;
+    font-weight: 600;
+  }
+  .nav-btn.prev:hover .nav-arrow { transform: translateX(-4px); }
+  .nav-btn.next:hover .nav-arrow { transform: translateX(4px); }
+  .nav-btn .nav-arrow { transition: transform 0.3s; }
 </style>
 </head>
 <body>
 
+<div class="page-nav">
+  <a class="nav-btn prev" href="bdt_charge_chart.html">
+    <span class="nav-arrow">←</span>
+    <span class="nav-text"><span class="nav-label">上一页</span><span class="nav-title">🇧🇩 BDT Charge</span></span>
+  </a>
+  <a class="nav-btn next" href="php_charge_chart.html">
+    <span class="nav-text"><span class="nav-label">下一页</span><span class="nav-title">🇵🇭 PHP Charge</span></span>
+    <span class="nav-arrow">→</span>
+  </a>
+</div>
+
 <div class="header">
   <h1>BRL Charge 成功率趋势分析</h1>
-  <p>2026-03-02 ~ 2026-04-15 · 每日 Top Provider 成功率曲线</p>
+  <p>2026-03-23 ~ 2026-04-27 · 每日 Top Provider 成功率曲线</p>
 </div>
 
 <div class="controls">
@@ -237,486 +311,7 @@
 <div id="statsContainer" class="stats-grid"></div>
 
 <script>
-const rawData = `Date: 2026-03-02
- Currency: BRL
- PixU2cpay: 159885/89.82
- PixGogo2pay: 37102/91.16
- PixUnivepay: 18093/91.26
- PixBestpay: 15008/90.55
- PixBcpay: 12524/90.67
- Pix4zpay: 11185/88.64
- PixTransafepay: 3920/89.00
- PixWaterpay: 2923/87.72
- PixNewCbpay: 2733/83.81
- PixSqpay: 2509/91.11
- PixWodipay: 1762/83.81
- PixNewwinpay: 130/89.23
- PixCepay: 38/86.84
- PixEpay2: 25/72.00
- PixUupay: 14/92.85
- PixGlobalpay: 9/66.66
- [charge] total num: 267856
-
-Date: 2026-03-03
- Currency: BRL
- PixU2cpay: 165764/90.04
- PixGogo2pay: 38003/91.40
- PixUnivepay: 21047/91.21
- PixBestpay: 18251/90.08
- PixTransafepay: 12655/90.77
- Pix4zpay: 7789/86.43
- PixBcpay: 5850/88.46
- PixSqpay: 3049/90.93
- PixWaterpay: 2204/84.71
- PixNewCbpay: 1890/81.97
- PixWodipay: 1228/85.27
- PixNewwinpay: 77/83.11
- PixEpay2: 56
- PixUupay: 36/86.11
- PixGlobalpay: 14/16.66
- PixCepay: 9/77.77
- PixMegipay: 7
- PixPcpay: 1
- [charge] total num: 277932
-
-Date: 2026-03-04
- Currency: BRL
- PixU2cpay: 159254/89.63
- PixGogo2pay: 36884/91.02
- PixUnivepay: 18882/90.99
- PixBestpay: 16831/89.00
- Pix4zpay: 11151/88.48
- PixTransafepay: 10955/90.74
- PixBcpay: 5244/87.69
- PixNewCbpay: 2802/85.38
- PixSqpay: 2375/89.48
- PixWodipay: 1294/85.83
- PixGlobalpay: 793/88.14
- PixWaterpay: 241/88.03
- PixNewwinpay: 176/83.52
- PixUupay: 61/57.37
- PixCepay: 49/87.50
- PixEpay2: 31
- PixMegipay: 7
- PixFpay: 2
- PixSitobankpay: 1/100.00
- PixDayangpay: 1
- [charge] total num: 267035
-
-Date: 2026-03-05
- Currency: BRL
- PixU2cpay: 153391/89.85
- PixGogo2pay: 38802/91.46
- PixUnivepay: 20694/93.11
- PixBestpay: 16922/89.83
- PixTransafepay: 9939/90.31
- Pix4zpay: 9093/89.92
- PixBcpay: 4237/87.68
- PixNewCbpay: 3767/85.07
- PixSqpay: 2564/92.17
- PixWodipay: 1922/87.92
- PixGlobalpay: 987/84.91
- PixNewwinpay: 517/88.00
- PixUupay: 52/67.30
- PixCepay: 42
- PixEpay2: 20
- PixNewcashpay: 17/100.00
- PixMegipay: 3
- PixFuyingpay: 3/66.66
- PixFpay: 1
- [charge] total num: 262972
-
-Date: 2026-03-06
- Currency: BRL
- PixU2cpay: 172554/88.88
- PixGogo2pay: 43907/90.72
- PixUnivepay: 20054/90.89
- PixBestpay: 19365/90.23
- PixNewCbpay: 12608/88.38
- Pix4zpay: 7994/87.31
- PixBcpay: 4083/87.88
- PixTransafepay: 3883/87.02
- PixWodipay: 3163/87.73
- PixSqpay: 2398/92.04
- PixGlobalpay: 1312/87.27
- PixNewwinpay: 1162/90.01
- PixCepay: 39/85.71
- PixUupay: 37/62.16
- PixEpay2: 33
- PixDayangpay: 9
- PixNewcashpay: 7/28.57
- PixFpay: 2
- [charge] total num: 292612
-
-Date: 2026-03-07
- Currency: BRL
- PixU2cpay: 208027/85.07
- PixGogo2pay: 49985/85.72
- PixUnivepay: 35713/86.85
- PixBestpay: 22968/86.38
- Pix4zpay: 12176/84.60
- PixNewCbpay: 6782/74.32
- PixTransafepay: 6647/85.85
- PixNewwinpay: 3809/87.54
- PixWodipay: 3568/82.25
- PixGlobalpay: 1983/84.36
- PixSqpay: 1941/89.92
- PixBcpay: 1493/82.90
- PixUupay: 53/81.13
- PixCepay: 44/84.09
- PixEpay2: 41
- PixMegipay: 2
- [charge] total num: 355231
-
-Date: 2026-03-08
- Currency: BRL
- PixU2cpay: 175035/88.82
- PixGogo2pay: 43941/90.61
- PixUnivepay: 30633/91.58
- PixBestpay: 21263/90.33
- Pix4zpay: 11805/90.45
- PixTransafepay: 5756/87.78
- PixNewCbpay: 5140/85.03
- PixSqpay: 3349/86.66
- PixNewwinpay: 3099/91.31
- PixWodipay: 1502/84.68
- PixGlobalpay: 913/82.10
- PixBcpay: 759/82.32
- PixUupay: 48/85.41
- PixEpay2: 45
- PixCepay: 38/89.47
- PixDayangpay: 3
- PixMegipay: 2
- PixFpay: 2
- PixNewcashpay: 1
- [charge] total num: 303334
-
-Date: 2026-03-09
- Currency: BRL
- PixU2cpay: 157706/88.92
- PixGogo2pay: 40661/90.47
- PixUnivepay: 17871/89.48
- PixBestpay: 16921/89.90
- PixNewCbpay: 10779/89.26
- Pix4zpay: 7945/89.90
- PixTransafepay: 4516/87.81
- PixBcpay: 2456/87.73
- PixNewwinpay: 2145/91.14
- PixSqpay: 1920/90.70
- PixWodipay: 1867/82.69
- PixGlobalpay: 972/87.34
- PixEpay2: 44
- PixUupay: 40/95.00
- PixCepay: 39/84.61
- PixDayangpay: 8
- PixFpay: 3
- PixUaupay: 2
- PixGanopay: 1
- PixMegipay: 1
- [charge] total num: 265897
-
-Date: 2026-03-10
- Currency: BRL
- PixU2cpay: 159504/89.23
- PixGogo2pay: 36825/90.15
- PixUnivepay: 26498/90.68
- PixBestpay: 17777/89.74
- Pix4zpay: 12125/90.40
- PixNewCbpay: 6362/86.32
- PixBcpay: 5417/87.88
- PixSqpay: 3318/92.09
- PixTransafepay: 2613/85.24
- PixWodipay: 879/83.35
- PixGlobalpay: 332/83.43
- PixNewwinpay: 91/89.01
- PixUupay: 52/88.46
- PixEpay2: 47
- PixNewcashpay: 31/3.22
- PixDayangpay: 19
- PixCepay: 17/88.23
- PixFpay: 1
- [charge] total num: 271907
-
-Date: 2026-03-11
- Currency: BRL
- PixU2cpay: 159660/89.15
- PixGogo2pay: 33210/90.27
- PixUnivepay: 27148/90.63
- PixBestpay: 19965/89.82
- Pix4zpay: 9325/88.24
- PixNewCbpay: 7521/88.38
- PixBcpay: 5885/89.00
- PixSqpay: 2483/91.17
- PixTransafepay: 1354/89.54
- PixWodipay: 503/92.82
- PixGlobalpay: 364/89.41
- PixNewcashpay: 270/84.70
- PixNewwinpay: 65/83.07
- PixUupay: 47/80.85
- PixCepay: 38/84.21
- PixEpay2: 21
- PixDayangpay: 1
- PixMegipay: 1
- PixFuyingpay: 1/100.00
- [charge] total num: 267863
-
-Date: 2026-03-12
- Currency: BRL
- PixU2cpay: 147981/88.52
- PixGogo2pay: 35959/89.78
- PixUnivepay: 24340/90.73
- PixBestpay: 16236/88.98
- Pix4zpay: 9789/88.04
- PixNewCbpay: 6332/83.68
- PixBcpay: 3987/86.41
- PixSqpay: 3476/89.31
- PixTransafepay: 2670/85.61
- PixGlobalpay: 866/87.97
- PixWodipay: 483/87.37
- PixNewwinpay: 83/84.33
- PixNewcashpay: 48/64.58
- PixEpay2: 39
- PixCepay: 33/78.78
- PixUupay: 32/71.87
- PixMegipay: 12
- PixUaupay: 8
- PixFuyingpay: 5
- PixPcpay: 1
- PixDayangpay: 1
- [charge] total num: 252381
-
-Date: 2026-03-13
- Currency: BRL
- PixU2cpay: 141647/89.15
- PixGogo2pay: 34589/90.47
- PixUnivepay: 21508/90.77
- PixBestpay: 15976/89.88
- Pix4zpay: 9298/89.29
- PixNewCbpay: 9267/86.71
- PixBcpay: 4297/85.47
- PixSqpay: 2361/90.53
- PixTransafepay: 1472/88.96
- PixWaterpay: 878/88.00
- PixGlobalpay: 545/90.62
- PixNewcashpay: 331/82.17
- PixWodipay: 223/90.13
- PixNewwinpay: 97/79.38
- PixUupay: 51/62.74
- PixEpay2: 45
- PixCepay: 28/81.81
- PixFuyingpay: 5
- PixDayangpay: 1
- PixMegipay: 1
- [charge] total num: 242621
-
-Date: 2026-03-14
- Currency: BRL
- PixU2cpay: 157220/89.17
- PixGogo2pay: 37248/90.52
- PixUnivepay: 25060/90.72
- PixBestpay: 19311/89.77
- Pix4zpay: 11078/89.21
- PixTransafepay: 7583/89.30
- PixNewCbpay: 5476/85.03
- PixBcpay: 3455/86.91
- PixSqpay: 2325/88.93
- PixWodipay: 2121/87.62
- PixNewcashpay: 758/85.71
- PixNewwinpay: 121/75.20
- PixUupay: 49/69.38
- PixEpay2: 47
- PixCepay: 27/77.77
- PixFuyingpay: 8
- PixWaterpay: 8/125.00
- PixGlobalpay: 4/75.00
- PixDayangpay: 3
- [charge] total num: 271901
-
-Date: 2026-03-15
- Currency: BRL
- PixU2cpay: 142360/89.01
- PixGogo2pay: 39491/90.41
- PixUnivepay: 29171/90.33
- PixBestpay: 18026/89.00
- Pix4zpay: 7626/88.25
- PixNewCbpay: 3089/83.99
- PixTransafepay: 2894/88.38
- PixBcpay: 2777/89.23
- PixWodipay: 2278/87.04
- PixUupay: 1391/86.55
- PixGlobalpay: 1155/76.95
- PixNewcashpay: 876/87.32
- PixNewwinpay: 496/88.88
- PixSqpay: 298/71.81
- PixSitobankpay: 218/78.89
- PixEpay2: 75/84.61
- PixCepay: 15/80.00
- PixFuyingpay: 8
- [charge] total num: 252243
-
-Date: 2026-03-16
- Currency: BRL
- PixU2cpay: 130015/88.96
- PixGogo2pay: 32894/90.81
- PixUnivepay: 24143/91.18
- PixBestpay: 16025/88.15
- Pix4zpay: 9003/88.97
- PixNewCbpay: 3271/84.16
- PixGlobalpay: 2602/86.45
- PixWodipay: 2575/88.06
- PixBcpay: 2503/88.75
- PixUupay: 1877/88.48
- PixSqpay: 1195/91.37
- PixNewcashpay: 1034/87.46
- PixTransafepay: 701/67.85
- PixSitobankpay: 116/87.06
- PixEpay2: 52/80.76
- PixCepay: 20/90.00
- PixFuyingpay: 3
- [charge] total num: 228028
-
-Date: 2026-03-17
- Currency: BRL
- PixU2cpay: 143089/89.39
- PixGogo2pay: 34726/90.39
- PixUnivepay: 26664/90.27
- PixBestpay: 12430/88.24
- Pix4zpay: 9858/88.52
- PixGlobalpay: 5584/88.18
- PixNewCbpay: 4623/82.62
- PixBcpay: 4034/85.61
- PixNewcashpay: 2116/86.57
- PixWodipay: 1802/85.12
- PixSqpay: 424/90.78
- PixUupay: 57/82.45
- PixCepay: 38/76.31
- PixEpay2: 36/75.00
- PixFuyingpay: 21
- PixNewwinpay: 12/83.33
- PixDayangpay: 9
- [charge] total num: 245523
-
-Date: 2026-03-18
- Currency: BRL
- PixU2cpay: 140079/87.86
- PixGogo2pay: 32330/88.41
- PixUnivepay: 24345/88.57
- Pix4zpay: 16180/86.29
- PixBestpay: 13790/85.46
- PixBcpay: 5727/79.09
- PixGlobalpay: 3346/77.94
- PixNewCbpay: 3253/70.19
- PixNewcashpay: 2700/81.07
- PixSqpay: 1809/84.42
- PixSitobankpay: 1401/84.90
- PixWaterpay: 1080/78.51
- PixTransafepay: 80/80.00
- PixKilipay: 61/62.29
- PixUupay: 43/88.09
- PixEpay2: 41/63.41
- PixCepay: 32/75.00
- PixNewwinpay: 24/75.00
- PixFuyingpay: 21
- PixDayangpay: 5
- PixFpay: 3
- PixGanopay: 2
- PixPcpay: 1
- [charge] total num: 246353
-
-Date: 2026-03-19
- Currency: BRL
- PixU2cpay: 144297/85.43
- PixGogo2pay: 35095/85.51
- PixUnivepay: 28550/86.18
- PixBestpay: 13948/84.37
- Pix4zpay: 12229/85.72
- PixSitobankpay: 4319/80.74
- PixNewCbpay: 4174/73.40
- PixBcpay: 3188/76.37
- PixNewcashpay: 2172/77.89
- PixGlobalpay: 1290/80.04
- PixSqpay: 1277/86.75
- PixWaterpay: 884/68.96
- PixEpay2: 50/54.00
- PixUupay: 47/78.72
- PixCepay: 28/57.14
- PixNewwinpay: 19/68.42
- PixDayangpay: 9
- PixFuyingpay: 8
- PixFpay: 2
- [charge] total num: 251586
-
-Date: 2026-03-20
- Currency: BRL
- PixU2cpay: 148296/86.57
- PixGogo2pay: 37110/87.96
- PixUnivepay: 28254/88.14
- Pix4zpay: 14670/87.21
- PixBestpay: 12774/84.39
- PixNewCbpay: 3149/70.12
- PixBcpay: 2886/75.61
- PixGlobalpay: 2790/75.65
- PixNewcashpay: 2577/82.51
- PixSitobankpay: 1374/81.29
- PixSqpay: 1279/82.64
- PixWanlihuipay: 1031/81.64
- PixWaterpay: 67/61.19
- PixEpay2: 53/50.94
- PixUupay: 49/79.59
- PixCepay: 37/83.78
- PixFuyingpay: 24
- PixNewwinpay: 23/82.60
- PixDayangpay: 8
- PixFpay: 1
- [charge] total num: 256450
-
-Date: 2026-03-21
- Currency: BRL
- PixU2cpay: 176627/86.48
- PixGogo2pay: 46203/87.45
- PixUnivepay: 34201/88.07
- PixBestpay: 19568/83.93
- Pix4zpay: 15050/84.28
- PixBcpay: 5955/78.02
- PixNewCbpay: 3681/72.04
- PixNewcashpay: 2937/81.47
- PixSitobankpay: 2464/83.67
- PixSqpay: 2203/83.86
- PixTransafepay: 690/73.87
- PixWanlihuipay: 304/75.32
- PixEpay2: 71/67.60
- PixUupay: 62/80.64
- PixGlobalpay: 62/61.66
- PixFuyingpay: 53
- PixCepay: 29/75.86
- PixNewwinpay: 29/68.96
- PixDayangpay: 5
- PixGanopay: 2
- PixUaupay: 2
- [charge] total num: 310202
-
-Date: 2026-03-22
- Currency: BRL
- PixU2cpay: 159596/85.97
- PixGogo2pay: 37020/87.35
- PixUnivepay: 22385/86.77
- Pix4zpay: 21125/87.69
- PixBestpay: 20993/82.56
- PixBcpay: 6116/77.03
- PixNewCbpay: 3486/72.56
- PixNewcashpay: 2490/82.48
- PixSitobankpay: 1393/82.97
- PixSqpay: 692/85.04
- PixGlobalpay: 298/71.81
- PixEpay2: 69/65.21
- PixUupay: 55/83.63
- PixFuyingpay: 19
- PixCepay: 18/77.77
- PixDayangpay: 9
- PixNewwinpay: 8/75.00
- [charge] total num: 275772
-
-Date: 2026-03-23
+const rawData = `Date: 2026-03-23
  Currency: BRL
  PixU2cpay: 139513/86.31
  PixGogo2pay: 33564/87.73
@@ -1256,7 +851,254 @@ Date: 2026-04-15
  PixEpay2: 52/53.84
  PixUupay: 30/70.00
  PixGlobalpay: 1/100.00
- [charge] total num: 264167`;
+ [charge] total num: 264167
+Date: 2026-04-16
+ Currency: BRL
+ PixU2cpay: 165030/86.51
+ PixGogo2pay: 38509/87.56
+ PixUnivepay: 29942/86.17
+ PixBestpay: 19494/84.77
+ Pix4zpay: 15926/84.59
+ PixWodipay: 4289/82.07
+ PixBcpay: 2870/78.46
+ PixNewCbpay: 2515/69.33
+ PixWanlihuipay: 2087/82.46
+ PixSqpay: 789/81.79
+ PixGlobalpay: 661/73.29
+ PixKubaopay: 447/68.40
+ PixSitobankpay: 445/71.23
+ PixKppay: 347/44.38
+ PixCepay: 89/61.36
+ PixNewwinpay: 80/67.50
+ PixEpay2: 73/58.90
+ PixUupay: 39/84.61
+ PixDayangpay: 8
+ PixFpay: 2
+ [charge] total num: 283642
+Date: 2026-04-17
+ Currency: BRL
+ PixU2cpay: 161156/86.72
+ PixGogo2pay: 33714/84.74
+ PixUnivepay: 31228/86.42
+ Pix4zpay: 14733/82.56
+ PixBcpay: 3414/80.99
+ PixSitobankpay: 2846/77.01
+ PixNewCbpay: 2769/68.38
+ PixWanlihuipay: 2556/82.09
+ PixSqpay: 1220/84.47
+ PixGlobalpay: 1174/80.15
+ PixKubaopay: 601/80.36
+ PixKppay: 186/46.23
+ PixCepay: 125/52.41
+ PixUupay: 36/75.00
+ PixEpay2: 32/68.75
+ PixFpay: 2
+ PixDayangpay: 2
+ [charge] total num: 255794
+
+Date: 2026-04-18
+ Currency: BRL
+ PixU2cpay: 172925/86.90
+ PixGogo2pay: 42413/87.35
+ PixUnivepay: 26693/84.90
+ Pix4zpay: 19423/86.89
+ PixBcpay: 3554/78.92
+ PixNewCbpay: 2274/69.77
+ PixSqpay: 2269/83.01
+ PixWanlihuipay: 1698/82.10
+ PixSitobankpay: 897/78.34
+ PixTransafepay: 576/81.56
+ PixKppay: 199/44.72
+ PixCepay: 129/60.46
+ PixEpay2: 51/78.43
+ PixUupay: 34/91.17
+ PixGlobalpay: 5
+ PixFpay: 1
+ [charge] total num: 273141
+
+Date: 2026-04-19
+ Currency: BRL
+ PixU2cpay: 156881/87.64
+ PixGogo2pay: 39681/87.17
+ PixUnivepay: 25906/86.07
+ Pix4zpay: 11818/82.57
+ PixSitobankpay: 4814/84.35
+ PixBcpay: 2881/79.40
+ PixNewCbpay: 1932/71.53
+ PixSqpay: 725/83.83
+ PixWanlihuipay: 543/73.64
+ PixTransafepay: 479/81.83
+ PixKppay: 285/33.80
+ PixCepay: 92/71.73
+ PixEpay2: 36/74.28
+ PixUupay: 31/70.96
+ PixGlobalpay: 1
+ [charge] total num: 246105
+Date: 2026-04-20
+ Currency: BRL
+ PixU2cpay: 136297/87.64
+ PixGogo2pay: 37074/87.96
+ PixUnivepay: 26325/86.61
+ Pix4zpay: 17116/84.90
+ PixSitobankpay: 4122/81.51
+ PixBcpay: 3151/79.72
+ PixNewCbpay: 1905/72.70
+ PixSqpay: 1473/82.89
+ PixWanlihuipay: 1128/79.24
+ PixCepay: 1047/76.12
+ PixKppay: 174/40.80
+ PixTransafepay: 50/76.00
+ PixEpay2: 39/79.48
+ PixUupay: 32/71.87
+ PixGlobalpay: 3
+ PixDayangpay: 2
+ PixFpay: 1
+ [charge] total num: 229939
+
+Date: 2026-04-21
+ Currency: BRL
+ PixU2cpay: 161492/87.66
+ PixGogo2pay: 38454/87.83
+ PixUnivepay: 30433/86.13
+ Pix4zpay: 14729/83.56
+ PixSitobankpay: 5276/81.97
+ PixBcpay: 3977/78.87
+ PixNewCbpay: 3597/74.35
+ PixSqpay: 1146/82.34
+ PixKppay: 286/28.04
+ PixWanlihuipay: 183/73.48
+ PixCepay: 116/65.51
+ PixTransafepay: 104/80.76
+ PixEpay2: 48/70.83
+ PixUupay: 28/67.85
+ PixGlobalpay: 3/33.33
+ [charge] total num: 259872
+Date: 2026-04-22
+ Currency: BRL
+ PixU2cpay: 145070/87.46
+ PixGogo2pay: 32019/87.78
+ PixUnivepay: 29423/86.52
+ PixBestpay: 20231/84.60
+ Pix4zpay: 12833/83.25
+ PixBcpay: 3041/80.51
+ PixNewCbpay: 2773/71.43
+ PixWanlihuipay: 2447/85.28
+ PixWodipay: 1292/84.89
+ PixSqpay: 1221/85.67
+ PixGlobalpay: 779/79.39
+ PixSitobankpay: 670/78.20
+ PixTransafepay: 353/80.73
+ PixKppay: 189/46.06
+ PixCepay: 130/55.38
+ PixNewwinpay: 84/86.90
+ PixEpay2: 43/72.09
+ PixUupay: 19/84.21
+ [charge] total num: 252617
+
+Date: 2026-04-23
+ Currency: BRL
+ PixU2cpay: 140769/87.28
+ PixUnivepay: 32260/86.68
+ PixGogo2pay: 31345/87.02
+ PixBestpay: 18897/83.99
+ Pix4zpay: 15188/85.01
+ PixBcpay: 2758/79.36
+ PixNewCbpay: 2042/72.38
+ PixSqpay: 1023/83.87
+ PixWanlihuipay: 804/76.80
+ PixSitobankpay: 528/78.21
+ PixKppay: 217/58.79
+ PixNewwinpay: 54/85.18
+ PixEpay2: 45/68.88
+ PixTransafepay: 26/61.53
+ PixUupay: 21/66.66
+ PixCepay: 14/71.42
+ PixGlobalpay: 3/66.66
+ [charge] total num: 245994
+Date: 2026-04-24
+ Currency: BRL
+ PixU2cpay: 147541/86.91
+ PixUnivepay: 34206/86.46
+ PixGogo2pay: 31132/86.53
+ PixBestpay: 15885/82.78
+ Pix4zpay: 13773/84.54
+ PixBcpay: 4122/80.95
+ PixNewCbpay: 2168/69.83
+ PixSitobankpay: 1281/83.68
+ PixWanlihuipay: 1083/82.87
+ PixSqpay: 989/84.21
+ PixTransafepay: 148/77.02
+ PixKppay: 118/47.45
+ PixNewwinpay: 86/75.58
+ PixEpay2: 60/81.66
+ PixCepay: 43/67.44
+ PixUupay: 42/73.80
+ PixGlobalpay: 4/75.00
+ PixGoldapay: 3
+ PixFpay: 1
+ PixDayangpay: 1
+ [charge] total num: 252686
+
+Date: 2026-04-25
+ Currency: BRL
+ PixU2cpay: 166054/86.66
+ PixGogo2pay: 41780/85.81
+ PixUnivepay: 31030/86.12
+ PixBestpay: 21476/84.93
+ Pix4zpay: 16838/83.03
+ PixNewCbpay: 4073/72.39
+ PixBcpay: 3051/81.83
+ PixSitobankpay: 1394/83.07
+ PixSqpay: 1379/84.67
+ PixWanlihuipay: 405/72.95
+ PixKppay: 193/56.47
+ PixTransafepay: 167/86.22
+ PixNewwinpay: 103/79.61
+ PixEpay2: 65/69.23
+ PixCepay: 55/63.63
+ PixUupay: 27/81.48
+ PixGlobalpay: 4/75.00
+ [charge] total num: 288094
+
+Date: 2026-04-26
+ Currency: BRL
+ PixU2cpay: 154754/87.31
+ PixGogo2pay: 35809/87.66
+ PixUnivepay: 30578/87.26
+ PixBestpay: 19211/84.05
+ Pix4zpay: 11923/83.70
+ PixNewCbpay: 9101/74.99
+ PixBcpay: 2654/79.34
+ PixSqpay: 1497/85.11
+ PixSitobankpay: 1172/84.89
+ PixTransafepay: 168/86.30
+ PixNewwinpay: 115/84.34
+ PixKppay: 109/68.80
+ PixEpay2: 43/76.74
+ PixUupay: 24/87.50
+ PixCepay: 23/65.21
+ PixGlobalpay: 2/100.00
+ [charge] total num: 267183
+Date: 2026-04-27
+ Currency: BRL
+ PixU2cpay: 140345/87.41
+ PixGogo2pay: 31742/87.57
+ PixUnivepay: 26152/86.58
+ PixBestpay: 13872/82.07
+ Pix4zpay: 11755/84.80
+ PixNewCbpay: 4398/74.50
+ PixGoldapay: 4030/79.61
+ PixBcpay: 2656/80.79
+ PixSitobankpay: 1890/83.85
+ PixKppay: 1328/74.54
+ PixSqpay: 881/83.62
+ PixTransafepay: 182/79.67
+ PixNewwinpay: 65/84.61
+ PixEpay2: 54/70.37
+ PixCepay: 38/71.05
+ PixUupay: 21/85.71
+ PixGlobalpay: 2/100.00
+ [charge] total num: 239411`;
 
 // Parse data
 const parsed = {};
@@ -1576,5 +1418,17 @@ createMainChart('all');
 createVolumeChart();
 updateStats('all');
 </script>
+
+<div class="page-nav bottom">
+  <a class="nav-btn prev" href="bdt_charge_chart.html">
+    <span class="nav-arrow">←</span>
+    <span class="nav-text"><span class="nav-label">上一页</span><span class="nav-title">🇧🇩 BDT Charge</span></span>
+  </a>
+  <a class="nav-btn next" href="php_charge_chart.html">
+    <span class="nav-text"><span class="nav-label">下一页</span><span class="nav-title">🇵🇭 PHP Charge</span></span>
+    <span class="nav-arrow">→</span>
+  </a>
+</div>
+
 </body>
 </html>

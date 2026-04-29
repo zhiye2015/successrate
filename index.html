@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>支付成功率趋势分析</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: #0a0e1a;
+    color: #e0e6ed;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 24px;
+  }
+
+  .header {
+    text-align: center;
+    margin-bottom: 48px;
+  }
+  .header h1 {
+    font-size: 36px;
+    font-weight: 700;
+    background: linear-gradient(135deg, #60a5fa, #a78bfa, #f472b6);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 12px;
+  }
+  .header p {
+    color: #8892a4;
+    font-size: 15px;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+    max-width: 900px;
+    width: 100%;
+  }
+
+  .card {
+    background: #111827;
+    border: 1px solid #1e293b;
+    border-radius: 16px;
+    padding: 32px 28px;
+    text-decoration: none;
+    color: inherit;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.35s ease;
+    cursor: pointer;
+  }
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    transition: height 0.3s ease;
+  }
+  .card:hover {
+    border-color: #334155;
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.4);
+  }
+  .card:hover::before {
+    height: 4px;
+  }
+
+  .card-idr::before { background: linear-gradient(90deg, #60a5fa, #a78bfa); }
+  .card-bdt::before { background: linear-gradient(90deg, #34d399, #60a5fa); }
+  .card-brl::before { background: linear-gradient(90deg, #f472b6, #fbbf24); }
+  .card-php::before { background: linear-gradient(90deg, #a78bfa, #f472b6); }
+
+  .card-idr:hover { box-shadow: 0 12px 40px rgba(96, 165, 250, 0.15); }
+  .card-bdt:hover { box-shadow: 0 12px 40px rgba(52, 211, 153, 0.15); }
+  .card-brl:hover { box-shadow: 0 12px 40px rgba(244, 114, 182, 0.15); }
+  .card-php:hover { box-shadow: 0 12px 40px rgba(167, 139, 250, 0.15); }
+
+  .card-icon {
+    font-size: 36px;
+    margin-bottom: 16px;
+  }
+
+  .card-title {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+  .card-idr .card-title { color: #60a5fa; }
+  .card-bdt .card-title { color: #34d399; }
+  .card-brl .card-title { color: #f472b6; }
+  .card-php .card-title { color: #a78bfa; }
+
+  .card-desc {
+    font-size: 13px;
+    color: #64748b;
+    line-height: 1.5;
+  }
+
+  .card-arrow {
+    position: absolute;
+    right: 24px;
+    bottom: 24px;
+    font-size: 18px;
+    color: #334155;
+    transition: all 0.3s ease;
+  }
+  .card:hover .card-arrow {
+    transform: translateX(4px);
+  }
+  .card-idr:hover .card-arrow { color: #60a5fa; }
+  .card-bdt:hover .card-arrow { color: #34d399; }
+  .card-brl:hover .card-arrow { color: #f472b6; }
+  .card-php:hover .card-arrow { color: #a78bfa; }
+
+  .footer {
+    margin-top: 48px;
+    color: #4a5568;
+    font-size: 12px;
+    text-align: center;
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>📊 Charge 成功率趋势分析</h1>
+  <p>选择币种查看对应的充值成功率趋势图表</p>
+</div>
+
+<div class="grid">
+  <a class="card card-idr" href="idr_charge_chart.html">
+    <div class="card-icon">🇮🇩</div>
+    <div class="card-title">IDR Charge</div>
+    <div class="card-desc">印尼盾充值成功率趋势分析<br>每日 Top Provider 成功率曲线</div>
+    <div class="card-arrow">→</div>
+  </a>
+
+  <a class="card card-bdt" href="bdt_charge_chart.html">
+    <div class="card-icon">🇧🇩</div>
+    <div class="card-title">BDT Charge</div>
+    <div class="card-desc">孟加拉塔卡充值成功率趋势分析<br>每日 Top Provider 成功率曲线</div>
+    <div class="card-arrow">→</div>
+  </a>
+
+  <a class="card card-brl" href="brl_charge_chart.html">
+    <div class="card-icon">🇧🇷</div>
+    <div class="card-title">BRL Charge</div>
+    <div class="card-desc">巴西雷亚尔充值成功率趋势分析<br>每日 Top Provider 成功率曲线</div>
+    <div class="card-arrow">→</div>
+  </a>
+
+  <a class="card card-php" href="php_charge_chart.html">
+    <div class="card-icon">🇵🇭</div>
+    <div class="card-title">PHP Charge</div>
+    <div class="card-desc">菲律宾比索充值成功率趋势分析<br>每日 Top Provider 成功率曲线</div>
+    <div class="card-arrow">→</div>
+  </a>
+</div>
+
+<div class="footer">
+  Payment Success Rate Dashboard
+</div>
+
+</body>
+</html>

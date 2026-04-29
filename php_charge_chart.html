@@ -193,13 +193,87 @@
     accent-color: #60a5fa;
     cursor: pointer;
   }
+
+  .page-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: stretch;
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+  .page-nav.bottom { margin-bottom: 0; margin-top: 32px; }
+  .nav-btn {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px 28px;
+    border: 1px solid #1e293b;
+    border-radius: 14px;
+    background: #111827;
+    color: #cbd5e1;
+    text-decoration: none;
+    font-family: 'Inter', sans-serif;
+    transition: all 0.3s ease;
+    min-width: 220px;
+    position: relative;
+    overflow: hidden;
+  }
+  .nav-btn::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, #60a5fa, #a78bfa);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .nav-btn:hover {
+    border-color: #334155;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+  }
+  .nav-btn:hover::before { opacity: 1; }
+  .nav-btn.prev { justify-content: flex-start; }
+  .nav-btn.next { justify-content: flex-end; margin-left: auto; text-align: right; }
+  .nav-arrow {
+    font-size: 28px;
+    font-weight: 300;
+    color: #60a5fa;
+    flex-shrink: 0;
+    line-height: 1;
+  }
+  .nav-text { display: flex; flex-direction: column; gap: 2px; }
+  .nav-label {
+    font-size: 11px;
+    color: #64748b;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .nav-title {
+    font-size: 16px;
+    font-weight: 600;
+  }
+  .nav-btn.prev:hover .nav-arrow { transform: translateX(-4px); }
+  .nav-btn.next:hover .nav-arrow { transform: translateX(4px); }
+  .nav-btn .nav-arrow { transition: transform 0.3s; }
 </style>
 </head>
 <body>
 
+<div class="page-nav">
+  <a class="nav-btn prev" href="brl_charge_chart.html">
+    <span class="nav-arrow">←</span>
+    <span class="nav-text"><span class="nav-label">上一页</span><span class="nav-title">🇧🇷 BRL Charge</span></span>
+  </a>
+  <a class="nav-btn next" href="index.html">
+    <span class="nav-text"><span class="nav-label">返回</span><span class="nav-title">🏠 首页导航</span></span>
+    <span class="nav-arrow">→</span>
+  </a>
+</div>
+
 <div class="header">
   <h1>PHP Charge 成功率趋势分析</h1>
-  <p>2026-03-17 ~ 2026-04-15 · 每日 Top Provider 成功率曲线</p>
+  <p>2026-03-23 ~ 2026-04-27 · 每日 Top Provider 成功率曲线</p>
 </div>
 
 <div class="controls">
@@ -231,99 +305,7 @@
 <div id="statsContainer" class="stats-grid"></div>
 
 <script>
-const rawData = `Date: 2026-03-17
- Currency: PHP
- s_php_982pay: 10157/83.78
- s_php_fpay: 3479/79.11
- s_php_filipay: 2689/79.65
- s_php_shunfapay: 883/71.01
- s_php_7tpay: 874/78.94
- s_php_shijiepay: 720/85.55
- s_php_v8pay: 438/76.43
- s_php_bfpay: 186/84.40
- s_php_kubaopay: 176/73.29
- s_php_global3pay: 69/84.05
- s_php_mmpay: 69/46.37
- s_php_ltpay: 66/48.48
- s_php_724pay: 27/44.44
- [charge] total num: 19833
-
-Date: 2026-03-18
- Currency: PHP
- s_php_982pay: 9452/82.27
- s_php_fpay: 5172/79.16
- s_php_v8pay: 2514/78.44
- s_php_shunfapay: 1081/65.70
- s_php_shijiepay: 1073/81.91
- s_php_7tpay: 511/71.62
- s_php_filipay: 466/63.73
- s_php_ltpay: 114/33.33
- s_php_724pay: 62/62.90
- s_php_mmpay: 42/16.66
- s_php_scpay: 2
- s_php_mypay2: 1
- [charge] total num: 20490
-
-Date: 2026-03-19
- Currency: PHP
- s_php_982pay: 11105/82.58
- s_php_fpay: 5219/81.99
- s_php_shijiepay: 1468/39.64
- s_php_v8pay: 1070/73.73
- s_php_shunfapay: 1022/71.98
- s_php_7tpay: 484/68.38
- s_php_filipay: 197/38.07
- s_php_bfpay: 179/69.27
- s_php_ltpay: 114/55.26
- s_php_mmpay: 16/18.75
- s_php_724pay: 1/100.00
- [charge] total num: 20875
-
-Date: 2026-03-20
- Currency: PHP
- s_php_982pay: 10450/81.44
- s_php_fpay: 5311/82.76
- s_php_shunfapay: 1132/71.02
- s_php_shijiepay: 901/79.68
- s_php_7tpay: 847/77.54
- s_php_filipay: 644/72.82
- s_php_v8pay: 450/75.55
- s_php_ltpay: 148/48.97
- s_php_mmpay: 4
- s_php_724pay: 1/100.00
- s_php_kubaopay: 1/100.00
- [charge] total num: 19889
-
-Date: 2026-03-21
- Currency: PHP
- s_php_982pay: 9204/83.62
- s_php_fpay: 5569/79.67
- s_php_v8pay: 1765/80.71
- s_php_shunfapay: 1104/71.82
- s_php_shijiepay: 887/81.62
- s_php_7tpay: 855/79.06
- s_php_filipay: 395/72.91
- s_php_kubaopay: 279/85.66
- s_php_ltpay: 121/47.93
- s_php_mmpay: 73/58.90
- [charge] total num: 20252
-
-Date: 2026-03-22
- Currency: PHP
- s_php_982pay: 9766/82.02
- s_php_fpay: 5110/77.54
- s_php_v8pay: 1801/79.67
- s_php_shunfapay: 1011/72.00
- s_php_7tpay: 624/72.59
- s_php_shijiepay: 533/78.61
- s_php_filipay: 317/69.20
- s_php_ltpay: 280/67.50
- s_php_mmpay: 111/64.86
- s_php_724pay: 94/56.38
- s_php_kubaopay: 31/74.19
- [charge] total num: 19678
-
-Date: 2026-03-23
+const rawData = `Date: 2026-03-23
  Currency: PHP
  s_php_982pay: 5796/84.36
  s_php_fpay: 4054/80.87
@@ -638,7 +620,176 @@ Date: 2026-04-15
  s_php_ltpay: 152/42.76
  s_php_filipay: 111/24.32
  s_php_mypay2: 35/71.42
- [charge] total num: 16847`;
+ [charge] total num: 16847
+Date: 2026-04-16
+ Currency: PHP
+ s_php_982pay: 5354/82.18
+ s_php_7tpay: 5095/77.58
+ s_php_shijiepay: 4105/79.04
+ s_php_fpay: 930/71.18
+ s_php_shunfapay: 703/64.15
+ s_php_v8pay: 494/39.66
+ s_php_mmpay: 184/18.47
+ s_php_ltpay: 157/37.57
+ s_php_filipay: 141/31.91
+ [charge] total num: 17163
+Date: 2026-04-17
+ Currency: PHP
+ PixBestpay: 18712/83.00
+ s_php_7tpay: 5769/77.86
+ s_php_982pay: 3390/81.35
+ s_php_shijiepay: 3077/78.87
+ s_php_bfpay: 2250/80.57
+ PixWodipay: 1859/82.14
+ s_php_v8pay: 963/70.06
+ s_php_shunfapay: 774/63.95
+ s_php_mmpay: 168/22.02
+ s_php_fpay: 158/43.03
+ s_php_ltpay: 126/38.88
+ s_php_filipay: 111/34.23
+ PixNewwinpay: 57/68.42
+ [charge] total num: 37414
+
+Date: 2026-04-18
+ Currency: PHP
+ PixBestpay: 25586/84.23
+ s_php_982pay: 4998/81.30
+ s_php_bfpay: 4442/81.62
+ s_php_7tpay: 3857/76.35
+ PixWodipay: 1945/83.40
+ s_php_v8pay: 1015/68.27
+ s_php_shunfapay: 628/63.69
+ s_php_shijiepay: 528/58.90
+ s_php_mmpay: 144/19.58
+ s_php_filipay: 140/45.71
+ s_php_fpay: 129/48.06
+ s_php_ltpay: 97/34.02
+ PixNewwinpay: 63/80.95
+ [charge] total num: 43572
+
+Date: 2026-04-19
+ Currency: PHP
+ PixBestpay: 25753/84.98
+ s_php_bfpay: 4837/83.83
+ s_php_7tpay: 4384/73.94
+ s_php_982pay: 4229/79.30
+ PixWodipay: 2353/83.29
+ s_php_v8pay: 1588/71.52
+ s_php_shunfapay: 767/68.44
+ s_php_shijiepay: 725/66.20
+ s_php_mmpay: 182/27.47
+ s_php_fpay: 127/40.15
+ s_php_filipay: 116/30.17
+ s_php_ltpay: 94/32.97
+ PixNewwinpay: 56/76.78
+ [charge] total num: 45211
+Date: 2026-04-20
+ Currency: PHP
+ PixBestpay: 12525/83.89
+ s_php_7tpay: 7459/76.13
+ s_php_982pay: 4642/81.71
+ PixWodipay: 3080/82.50
+ s_php_shijiepay: 1446/73.37
+ s_php_shunfapay: 808/62.99
+ s_php_v8pay: 739/69.82
+ s_php_mmpay: 214/25.70
+ s_php_fpay: 162/35.80
+ s_php_ltpay: 158/35.44
+ s_php_filipay: 120/28.33
+ PixNewwinpay: 44/79.54
+ [charge] total num: 31397
+
+Date: 2026-04-21
+ Currency: PHP
+ PixBestpay: 24526/86.19
+ s_php_7tpay: 8700/72.54
+ s_php_982pay: 3741/77.81
+ s_php_shijiepay: 2290/71.09
+ PixWodipay: 1828/84.73
+ s_php_shunfapay: 872/69.15
+ s_php_v8pay: 795/67.67
+ s_php_mmpay: 194/23.71
+ s_php_fpay: 159/41.50
+ s_php_ltpay: 139/28.77
+ s_php_filipay: 134/27.61
+ PixNewwinpay: 67/79.10
+ [charge] total num: 43445
+Date: 2026-04-22
+ Currency: PHP
+ s_php_7tpay: 5803/75.19
+ s_php_982pay: 4981/81.44
+ s_php_shijiepay: 3295/74.74
+ s_php_shunfapay: 868/70.35
+ s_php_v8pay: 336/36.30
+ s_php_mmpay: 158/21.51
+ s_php_fpay: 133/37.59
+ s_php_filipay: 120/39.16
+ s_php_ltpay: 119/43.69
+ [charge] total num: 15813
+
+Date: 2026-04-23
+ Currency: PHP
+ s_php_7tpay: 9728/77.68
+ s_php_982pay: 2388/78.76
+ s_php_shijiepay: 1087/66.42
+ s_php_shunfapay: 868/70.74
+ s_php_v8pay: 610/60.49
+ s_php_mmpay: 192/20.83
+ s_php_ltpay: 162/24.22
+ s_php_filipay: 143/31.46
+ s_php_fpay: 140/33.57
+ [charge] total num: 15318
+Date: 2026-04-24
+ Currency: PHP
+ s_php_7tpay: 8325/77.23
+ s_php_982pay: 3455/81.67
+ s_php_v8pay: 925/68.10
+ s_php_shunfapay: 853/67.76
+ s_php_shijiepay: 707/61.66
+ s_php_mmpay: 166/20.85
+ s_php_fpay: 134/36.56
+ s_php_ltpay: 118/22.03
+ s_php_filipay: 109/26.60
+ [charge] total num: 14792
+
+Date: 2026-04-25
+ Currency: PHP
+ s_php_7tpay: 6455/74.19
+ s_php_982pay: 4788/82.43
+ s_php_v8pay: 1137/73.08
+ s_php_shijiepay: 1016/68.30
+ s_php_fpay: 980/73.67
+ s_php_shunfapay: 840/68.69
+ s_php_mmpay: 159/29.74
+ s_php_filipay: 119/43.69
+ s_php_ltpay: 80/43.75
+ [charge] total num: 15574
+
+Date: 2026-04-26
+ Currency: PHP
+ s_php_982pay: 7759/80.55
+ s_php_7tpay: 4177/73.18
+ s_php_shijiepay: 1473/70.26
+ s_php_v8pay: 1159/71.95
+ s_php_shunfapay: 904/69.13
+ s_php_mmpay: 189/19.04
+ s_php_fpay: 144/32.63
+ s_php_filipay: 136/25.73
+ s_php_ltpay: 65/44.61
+ [charge] total num: 16006
+Date: 2026-04-27
+ Currency: PHP
+ s_php_982pay: 5019/82.86
+ s_php_7tpay: 4247/77.37
+ s_php_kubaopay: 1841/80.66
+ s_php_shunfapay: 868/69.58
+ s_php_fpay: 712/74.15
+ s_php_v8pay: 446/50.44
+ s_php_shijiepay: 426/50.93
+ s_php_ltpay: 252/61.11
+ s_php_mmpay: 144/22.91
+ s_php_filipay: 106/29.24
+ [charge] total num: 14061`;
 
 // Parse data
 const parsed = {};
@@ -912,5 +1063,17 @@ createMainChart('all');
 createVolumeChart();
 updateStats('all');
 </script>
+
+<div class="page-nav bottom">
+  <a class="nav-btn prev" href="brl_charge_chart.html">
+    <span class="nav-arrow">←</span>
+    <span class="nav-text"><span class="nav-label">上一页</span><span class="nav-title">🇧🇷 BRL Charge</span></span>
+  </a>
+  <a class="nav-btn next" href="index.html">
+    <span class="nav-text"><span class="nav-label">返回</span><span class="nav-title">🏠 首页导航</span></span>
+    <span class="nav-arrow">→</span>
+  </a>
+</div>
+
 </body>
 </html>
